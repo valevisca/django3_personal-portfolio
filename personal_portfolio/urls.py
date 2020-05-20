@@ -1,0 +1,37 @@
+"""personal_portfolio URL Configuration
+
+The `urlpatterns` list routes URLs to views. For more information please see:
+    https://docs.djangoproject.com/en/3.0/topics/http/urls/
+Examples:
+Function views
+    1. Add an import:  from my_app import views
+    2. Add a URL to urlpatterns:  path('', views.home, name='home')
+Class-based views
+    1. Add an import:  from other_app.views import Home
+    2. Add a URL to urlpatterns:  path('', Home.as_view(), name='home')
+Including another URLconf
+    1. Import the include() function: from django.urls import include, path
+    2. Add a URL to urlpatterns:  path('blog/', include('blog.urls'))
+"""
+from django.contrib import admin
+from django.urls import path, include
+# To manage static objects, like images, we need to imprort the static module
+from django.conf.urls.static import static
+# This import is required to access MEDIA_URL and MEDIA_ROOT
+from django.conf import settings
+# We have to import the views.py module from portfolio
+from portfolio import views
+
+urlpatterns = [
+    path('', views.home, name='home'),
+    path('admin/', admin.site.urls),
+    path('blog/', include('blog.urls')),
+]
+
+
+# We then need to update the urlpatterns variable
+# We need to tell urlpatters where to find the images, so we need to pass
+# the media urls and the media root folder locatiom. The  MEDIA_URL is not
+# defined and has to be defined in settings.py
+# After defining MEDIA_URL we have to import settings from django.conf
+urlpatterns += static(settings.MEDIA_URL, document_root=settings.MEDIA_ROOT)

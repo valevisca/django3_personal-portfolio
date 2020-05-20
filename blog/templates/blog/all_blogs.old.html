@@ -1,0 +1,18 @@
+<!-- To make use of a common html template, which for us is file 'base.html' 
+we need to declare that this file is an extension of 'base.html' and then we 
+need to identify which is the part that has to be passed to the base file with 
+the content we want to represent -->
+{% extends 'portfolio/base.html' %}
+{% block  content %}
+
+    <h1>Hello Blog</h1>
+    <h2>Valerio has written {{ blogs.count }} blog post{{ blogs.count|pluralize }}.</h2>
+    {% for blog in blogs %}
+       <a href="{% url 'blog:detail' blog.id %}"> <h2>{{ blog.title }}</h2></a>
+        <h5>{{ blog.date|date:'M d Y' }}</h5>
+        <!-- We can seen an example of piping using Django templates language
+        'striptags' does not interpret nor show the html tags present in the 
+        description -->
+        <p>{{ blog.description|striptags|truncatechars:100 }}</p>
+    {% endfor %}
+{% endblock %}
